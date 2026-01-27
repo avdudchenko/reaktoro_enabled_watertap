@@ -8,21 +8,23 @@ For reaktoro-pse usage refer to [reaktoro-pse github](https://github.com/waterta
 For reaktoro usage refer to [reaktoro](https://reaktoro.org/index.html)
 
 ## 2 Example flowsheets
-### a. Reverse osmosis with acid addition and softening as pre-treatment 
+### a. Reveres osmosis with softening and acid addition as pre-treatment 
 
-This is a standard flowsheet used for demonstrating advanced water chemistry modeling with WaterTAP where reaktoro is used to model:
+This is the standard flowsheet used for demonstrating advanced water chemistry modeling with WaterTAP where reaktoro is used to model:
 
     a. Precipitation of solids in softening via addition of Lime and soda ash
     b. pH change via addition of acid
     c. Scaling potential in the Reverse Osmosis process.
 
+### b. Property comparator
+This is a simple flowsheet that compares NaCl and SeaWater properties to Reaktoro calculations of Osmotic pressure and density. The comparison uses the four feed water cases in water_sources folder. 
 
 ## 3 Example analysis
 The repository includes example analysis that are featured in publications that are either published, under review, or might be in preparation. 
 To reproduce results please review the analysis_scripts folder. 
 
 ### 3.1 Generating analysis data
-Please review files in data_generation folder and run all the analysis script python files. Generally, these will use the [loop_tool](https://watertap.readthedocs.io/en/latest/how_to_guides/how_to_use_loopTool_to_explore_flowsheets.html). Review accompanying .yaml files to understand the sweeps being performed, and likely accompanying readme file. 
+Please review files in data_generation folder and run all the analysis python files (Alternativly you can run `pytest --pyargs reaktoro_enabled_watertap -m analysis`). Generally, these take substantial time  to run, will use the [loop_tool](https://watertap.readthedocs.io/en/latest/how_to_guides/how_to_use_loopTool_to_explore_flowsheets.html). Review accompanying .yaml files to understand the sweeps being performed, and accompanying readme file. 
 
 ### 3.2 Figure generation and data processing. 
 Please review the executable python files in the figure_generation folder, and run them to generate figures. The repo does not include any of the necessary data, so please refer to the readme file in the folder or generate data using the files in the data_generation folder. 
@@ -66,13 +68,14 @@ e. Run core tests to verify all units and core tests pass
 
     pytest -m core
 
-d. (Optional) Run flowsheet tests, these could take upto 10 to 60 min to complete
+d. (Optional) Run flowsheet tests, these could take up-to 10 to 60 min to complete
 
     pytest -m flowsheets
 
 d. (Optional) Run analysis tests, this will run analysis code in all of the analysis folders and can take significant time and compute, depending on system (3-10 hours)
 
     pytest -m analysis
+    
 #### 6.2 Using models and tools in analysis
 
 Install in your working environment inside conda
@@ -80,7 +83,7 @@ Install in your working environment inside conda
     conda install cyipopt reaktoro
     pip install git+https://github.com/watertap-org/reaktoro_enabled_watertap.git
 
-Import any of the flowsheet untis or flowsheet into your analysis code using
+Import any of the flowsheet units or flowsheets into your analysis code using
 
     import reaktoro_enabled_watertap as rew
     m.fs.reaktor_unit_model=rew.unit_models.reaktor_enabled_model(**kwargs)
