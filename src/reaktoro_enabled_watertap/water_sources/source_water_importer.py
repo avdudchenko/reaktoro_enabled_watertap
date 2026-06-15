@@ -47,6 +47,10 @@ def get_source_water_data(water_source, file_location=None):
         "temperature": feed_temperature,
         "alkalinity_as_CaCO3": alkalinity,
     }
+    
+    if "pE" in data_dict:
+        feed_spec_dict["pE"] = float(data_dict["pE"])
+
     if data_dict.get("flow_mass", None) is not None:
         feed_spec_dict["mass_flowrate"] = (
             data_dict.get("flow_mass", None) * pyunits.kg / pyunits.s

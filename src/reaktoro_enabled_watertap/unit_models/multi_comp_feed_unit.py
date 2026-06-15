@@ -256,7 +256,7 @@ class MultiCompFeedData(WaterTapFlowsheetBlockData):
         sub_model.fs.feed = Feed(property_package=self.config.default_property_package)
         sub_model.fs.feed.pH = Var(units=pyunits.dimensionless)
         iscale.set_scaling_factor(sub_model.fs.feed.pH, 1)
-        if self.config.pE is not None and self.config.pE is True:
+        if self.config.pE is not None:
             sub_model.fs.feed.pE = Var(
                 initialize=0,
                 units=pyunits.dimensionless,

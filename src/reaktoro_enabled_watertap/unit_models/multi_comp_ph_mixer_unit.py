@@ -138,7 +138,7 @@ class MixerPhUnitData(WaterTapFlowsheetBlockData):
         if self.config.track_pE:
             self.mixer.pE = Var(
                 all_ports,
-                initialize=7,
+                initialize=4,
                 units=pyunits.dimensionless,
                 bounds=(None, None),
             )
@@ -346,16 +346,15 @@ class MixerPhUnitData(WaterTapFlowsheetBlockData):
                         obj.fix(ref_stream.flow_mol_phase_comp[idx].value * 1)
                         self.fixed_streams.append(obj)
                     inlet_var.pressure = ref_stream.pressure.value
-                    print("Propagated stream is ", ref_inlet)
                     self.mixer.pH[inlet].value = self.mixer.pH[f"{ref_inlet}"].value
+                    if self.config.track_pE:
+                        self.mixer.pE["outlet"].value = self.mixer.pE[f"{ref_inlet}"].value
                     inlet_var.temperature.value = self.mixer.find_component(
                         f"{ref_inlet}_state"
                     )[0].temperature.value
-                    print(
-                        "Fixed temperature for inlet ",
-                        inlet_var.temperature.value,
-                    )
             self.mixer.pH["outlet"].value = self.mixer.pH[f"{ref_inlet}"].value
+            if self.config.track_pE:
+                self.mixer.pE["outlet"].value = self.mixer.pE[f"{ref_inlet}"].value
             self.mixer.mixed_state[0].temperature.value = self.mixer.find_component(
                 f"{ref_inlet}_state"
             )[0].temperature.value
