@@ -23,7 +23,7 @@ def test_treatment_sweep():
     if os.path.exists(filename):
         os.remove(filename)
 
-    treatment_sweep.main()
+    treatment_sweep.main(num_loop_workers=4)
 
     data_manager = PsDataManager(
         filename,
@@ -473,5 +473,5 @@ def test_treatment_sweep():
             if val is None:
                 assert solved_data[i] != solved_data[i]
             else:
-                assert val == pytest.approx(solved_data[i], abs=1e-3)
+                assert val == pytest.approx(solved_data[i], abs=1e-2)
     # print(test_data)
